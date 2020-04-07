@@ -28,6 +28,7 @@ public class BollywoodGui {
     int countToSuccess = 0;
     int numOfMovieChars = 0;
     String GuessType = " ";
+    String hint = "";
     JLabel MessageLabel = new JLabel(GuessType);
     StringBuilder TrackString;
 
@@ -46,8 +47,8 @@ public class BollywoodGui {
     public class TimerFunction implements Runnable {
 
         public void run() {
-            min = 2;
-            sec = 0;
+            min = 1;
+            sec = 30;
             String x = "";
             try {
                 while (min >= 0 && !StopTheTimer) {
@@ -63,11 +64,13 @@ public class BollywoodGui {
                     if (sec == 0) {
                         sec = 60;
                         min--;
+                        GuessType = "Hint: "+ hint;
+                        showDisplay(Color.magenta);
                     }
                     sec--;
                 }
                 if (min < 0) {
-                    EndTheGame("Time Up , AALSI !\n PLAY AGAIN ??");
+                    EndTheGame("Time Up , AALSI!\n PLAY AGAIN ??");
                 }
             } catch (Exception e) {
             }
@@ -88,7 +91,7 @@ public class BollywoodGui {
     }
 
     public void EndTheGame(String FinalMessage) {
-        showDisplay();
+        showDisplay(Color.RED);
         JOptionPane Result = new JOptionPane();
         int Restart = Result.showConfirmDialog(frame, FinalMessage, "Bollywood", JOptionPane.YES_NO_OPTION);
         if (Restart == Result.YES_OPTION) {
@@ -134,11 +137,11 @@ public class BollywoodGui {
                 EndTheGame(GuessType + "\n PLAY AGAIN ??");
             }
         }
-        showDisplay();
+        showDisplay(Color.RED);
 
     }
 
-    public void showDisplay() {
+    public void showDisplay(Color messageColor) {
 
         // Setting the Movie Label
         StringBuilder MString = new StringBuilder(DisplayChars.size());
@@ -153,7 +156,7 @@ public class BollywoodGui {
         MovieLabel.setText(DisplayString);
         Npanel.repaint();
         Npanel.revalidate();
-
+        MessageLabel.setForeground(messageColor);
         MessageLabel.setText(GuessType);
 
         Cpanel.repaint();
@@ -185,7 +188,7 @@ public class BollywoodGui {
         Cpanel.add(MessageLabel);
         MessageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         MessageLabel.setFont(new Font("Bookman Old Style", Font.PLAIN, 18));
-        MessageLabel.setForeground(Color.RED);
+
         //Setting Buttons In South Panel
 
         //ImageIcon blackButtons = new ImageIcon(getClass().getResource("bg1.jpg"));
@@ -228,8 +231,6 @@ public class BollywoodGui {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(350, 400);
         frame.setVisible(true);
-
-        //showDisplay();
     }
 
     public void algoSetup() {
@@ -259,7 +260,7 @@ public class BollywoodGui {
             e.printStackTrace();
         }
         TrackString = new StringBuilder("B O L L Y W O O D");
-        showDisplay();
+        showDisplay(Color.RED);
         Thread t = new Thread(new TimerFunction());
         t.start();
     }
@@ -274,7 +275,8 @@ public class BollywoodGui {
                 ++n;
                 String line = sc.nextLine();
                 if (rand.nextInt(n) == 0) {
-                    film = line;
+                    film = line.split(",")[0];
+                    hint = line.split(",")[1];
                 }
             }
         } catch (Exception e) {
