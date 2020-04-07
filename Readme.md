@@ -21,4 +21,4 @@ GUI VERSION
 On IntelliJ, Simply Right Click the `bollywood-game.jar` in the respective directory
 and `Run` as shown in the below image:
 
-![IntelliJ](../out/artifacts/bollywood_game_jar/resources/instruction.png)
+![IntelliJ](out/artifacts/bollywood_game_jar/resources/instruction.png)
