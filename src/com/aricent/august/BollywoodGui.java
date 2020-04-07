@@ -243,8 +243,8 @@ public class BollywoodGui {
 		
 	*/
         try {
-            File file = new File("src/com/aricent/august/MoviesList.txt");
-            String Movie = getRandomMovie(file).toUpperCase();
+            InputStream in = getClass().getResourceAsStream("MoviesList.txt");
+            String Movie = getRandomMovie(in).toUpperCase();
 
             for (char chmovie : Movie.toCharArray()) {
                 MovieChars.add(chmovie);
@@ -264,7 +264,7 @@ public class BollywoodGui {
         t.start();
     }
 
-    public String getRandomMovie(File inputFile) {
+    public String getRandomMovie(InputStream inputFile) {
 
         String film = null;
         Random rand = new Random();
@@ -277,7 +277,7 @@ public class BollywoodGui {
                     film = line;
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return film;
